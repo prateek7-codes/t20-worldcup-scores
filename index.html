@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>T20 World Cup 2026 – Live Scores</title>
+  <title>T20 World Cup 2026 – Full Schedule & Results</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
@@ -52,11 +52,24 @@
       margin: 30px auto;
     }
 
+    .date {
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      background: #122c44;
+      padding: 8px 10px;
+      border-radius: 6px;
+    }
+
+    body.light .date {
+      background: #ddd;
+    }
+
     .match-card {
       background: #163a5f;
       padding: 12px 15px;
       border-radius: 8px;
-      margin-bottom: 15px;
+      margin-top: 10px;
     }
 
     body.light .match-card {
@@ -69,6 +82,7 @@
       margin-top: 5px;
     }
 
+    /* Toggle Switch */
     .switch {
       position: relative;
       display: inline-block;
@@ -113,10 +127,6 @@
     input:checked + .slider:before {
       transform: translateX(26px);
     }
-
-    h2 {
-      margin-top: 40px;
-    }
   </style>
 </head>
 
@@ -134,69 +144,69 @@
   </label>
 </nav>
 
-<h1>🏏 T20 World Cup 2026 – Live Scores</h1>
+<h1>🏏 T20 World Cup 2026 – Full Schedule</h1>
 
+<!-- COMPLETED MATCHES -->
 <section id="completed">
   <h2>Completed Matches</h2>
-  <div id="completed-container"></div>
+
+  <div class="date">Feb 07, 2026</div>
+
+  <div class="match-card">
+    <h3>PAK vs NED</h3>
+    <p>PAK: 175/6 (20)</p>
+    <p>NED: 160/9 (20)</p>
+    <div class="result">PAK won by 15 runs</div>
+  </div>
+
+  <div class="match-card">
+    <h3>IND vs USA</h3>
+    <p>IND: 182/5 (20)</p>
+    <p>USA: 150/8 (20)</p>
+    <div class="result">IND won by 32 runs</div>
+  </div>
+
+  <div class="date">Feb 08, 2026</div>
+
+  <div class="match-card">
+    <h3>NZ vs AFG</h3>
+    <p>NZ: 168/7</p>
+    <p>AFG: 155/9</p>
+    <div class="result">NZ won by 13 runs</div>
+  </div>
+
 </section>
 
+
+<!-- UPCOMING MATCHES -->
 <section id="upcoming">
   <h2>Upcoming Matches</h2>
-  <div id="upcoming-container"></div>
+
+  <div class="date">Feb 15, 2026</div>
+
+  <div class="match-card">
+    <h3>IND vs PAK</h3>
+    <p>Starts at 7:30 PM IST</p>
+  </div>
+
+  <div class="match-card">
+    <h3>ENG vs NZ</h3>
+    <p>Starts at 4:00 PM IST</p>
+  </div>
+
+  <div class="date">Mar 08, 2026</div>
+
+  <div class="match-card">
+    <h3>Final</h3>
+    <p>TBD vs TBD</p>
+  </div>
+
 </section>
 
 <script>
 function toggleMode() {
   document.body.classList.toggle("light");
 }
-
-const API_KEY = "bc1d65c6-6d49-42b3-a7f1-059bf6e27abe";
-const apiUrl = `https://api.cricapi.com/v1/matches?apikey=${API_KEY}&offset=0`;
-
-fetch(apiUrl)
-  .then(res => res.json())
-  .then(data => {
-
-    const completedContainer = document.getElementById("completed-container");
-    const upcomingContainer = document.getElementById("upcoming-container");
-
-    data.data.forEach(match => {
-
-      const card = document.createElement("div");
-      card.className = "match-card";
-
-      const title = document.createElement("h3");
-      title.textContent = match.name;
-      card.appendChild(title);
-
-      // Scores if available
-      if (match.score && match.score.length > 0) {
-        match.score.forEach(score => {
-          const p = document.createElement("p");
-          p.textContent = `${score.inning}: ${score.r}/${score.w} (${score.o})`;
-          card.appendChild(p);
-        });
-      }
-
-      const status = document.createElement("div");
-      status.className = "result";
-      status.textContent = match.status;
-      card.appendChild(status);
-
-      // Decide where to place match
-      if (match.matchEnded) {
-        completedContainer.appendChild(card);
-      } else {
-        upcomingContainer.appendChild(card);
-      }
-
-    });
-
-  })
-  .catch(error => {
-    console.error("Error fetching matches:", error);
-  });
 </script>
 
 </body>
